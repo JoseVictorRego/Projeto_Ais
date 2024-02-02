@@ -1,0 +1,313 @@
+[
+    {
+        "label": "mysql.connector",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mysql.connector",
+        "description": "mysql.connector",
+        "detail": "mysql.connector",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "queue",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "queue",
+        "description": "queue",
+        "detail": "queue",
+        "documentation": {}
+    },
+    {
+        "label": "load_workbook",
+        "importPath": "openpyxl",
+        "description": "openpyxl",
+        "isExtraImport": true,
+        "detail": "openpyxl",
+        "documentation": {}
+    },
+    {
+        "label": "load_workbook",
+        "importPath": "openpyxl",
+        "description": "openpyxl",
+        "isExtraImport": true,
+        "detail": "openpyxl",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "isExtraImport": true,
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "isExtraImport": true,
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "conectar",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def conectar():\n    \"\"\"Conectar ao banco de dados.\"\"\"\n    try:\n        config = {\n            'host': '127.0.0.1',\n            'user': 'root',\n            'password': '',\n            'database': 'banco_ais_faculdade'\n        }\n        # Conectar ao MySQL",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "desconectar",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def desconectar(conn, cursor):\n    \"\"\"Desconectar do banco de dados.\"\"\"\n    # Fechar a conexão\n    if conn and conn.is_connected():\n        cursor.close()\n        conn.close()\n        print(\"Conexão fechada.\")\n# ------------------Funções para obter Id_ das tabelas do banco de dados----------------------------------\n# Função consutar id_aluno no banco\ndef consultar_id_aluno(conn, cursor, nome, sexo, forma_ingresso, periodo_ingresso):",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_id_aluno",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_id_aluno(conn, cursor, nome, sexo, forma_ingresso, periodo_ingresso):\n    # Tentar inserir aluno no banco, caso ele não esteja cadastrado\n    inserir_dados_aluno(conn, cursor, nome, sexo, forma_ingresso, periodo_ingresso)\n    # Obter o id_aluno\n    query = (\"SELECT id_aluno FROM aluno \"\n             \"WHERE nome_aluno = %s AND sexo = %s AND forma_ingresso = %s AND periodo_ingresso = %s\")\n    cursor.execute(query, (nome, sexo, forma_ingresso,  periodo_ingresso))\n    result = cursor.fetchone()\n    # Retorna o id_aluno\n    return result[0]",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_id_disciplina",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_id_disciplina(conn, cursor, codigo_disciplina, nome_disciplina, carga_horaria, creditos):\n    # Tentar inserir dados de disciplina\n    inserir_dados_disciplina(conn, cursor, codigo_disciplina, nome_disciplina, carga_horaria, creditos)\n    # Obter o id_disciplina\n    query = \"SELECT id_disciplina FROM disciplina WHERE nome_disciplina = %s\"\n    cursor.execute(query, (nome_disciplina, ))\n    result = cursor.fetchone()\n    # Retorna o id_disciplina\n    return result[0]\n# Função consutar id_professor no banco",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_id_professor",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_id_professor(conn, cursor, nome_professor):\n    # Tentar inserir professor no banco caso ele não esteja cadastrado\n    inserir_dados_professor(conn, cursor, 'professor', 'nome_professor', nome_professor)\n    # Obter o id_professor\n    query = \"SELECT id_professor FROM professor WHERE nome_professor = %s\"\n    cursor.execute(query, (nome_professor,))\n    result = cursor.fetchone()\n    # Retorna o id_professor\n    return result[0]\n# Função consutar id_historico no banco",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_id_historico",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_id_historico(conn, cursor, semestre, id_aluno, id_disciplina, id_professor, nota_final, situacao):\n    # Tentar inserir professor no banco caso ele não esteja cadastrado\n    inserir_dados_historico(conn, cursor, semestre, id_aluno, id_disciplina, id_professor, nota_final, situacao)\n    # Obter o id_historico\n    query = \"SELECT id_historico FROM historico WHERE semestre = %s AND id_aluno = %s  AND id_disciplina = %s\"\n    cursor.execute(query, (semestre, id_aluno, id_disciplina))\n    result = cursor.fetchone()\n    # Retorna o id_historico se encontrado\n    return result[0]\n# -------------------Funções para adicionar Aluno---------------------------------------------------------------------",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_duplicacao_aluno",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def verificar_duplicacao_aluno(cursor, nome, sexo, forma_ingresso, periodo_ingresso):\n    # Verificar se a linha já existe\n    check_duplicate_query = \"\"\"\n    SELECT * FROM aluno\n    WHERE nome_aluno = %s AND sexo = %s AND forma_ingresso = %s AND periodo_ingresso = %s\n    \"\"\"\n    params = (nome, sexo, forma_ingresso, periodo_ingresso)\n    cursor.execute(check_duplicate_query, params)\n    result = cursor.fetchall()\n    return len(result) > 0",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "inserir_dados_aluno",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def inserir_dados_aluno(conn, cursor, nome, sexo, forma_ingresso, periodo_ingresso):\n    # if para adicionar apenas o aluno que não estão cadastrados ainda no banco de dados.\n    if not verificar_duplicacao_aluno(cursor, nome, sexo, forma_ingresso, periodo_ingresso):\n        # Inserção de dados\n        insert_data_query = \"\"\"\n        INSERT INTO aluno (nome_aluno, sexo, forma_ingresso, periodo_ingresso)\n        VALUES (%s, %s, %s, %s)\n        \"\"\"\n        aluno_data = (nome, sexo, forma_ingresso, periodo_ingresso)\n        cursor.execute(insert_data_query, aluno_data)",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_duplicacao_professor",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def verificar_duplicacao_professor(cursor, tabela, nome_coluna, valor):\n    # Verificar se a linha já existe\n    check_duplicate_query = f\"\"\"\n    SELECT * FROM {tabela}\n    WHERE {nome_coluna} = %s\n    \"\"\"\n    params = (valor,)\n    cursor.execute(check_duplicate_query, params)\n    result = cursor.fetchall()\n    return len(result) > 0",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "inserir_dados_professor",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def inserir_dados_professor(conn, cursor, tabela, nome_coluna, valor):\n    # if para adicionar apenas o professor que não estão cadastrados ainda no banco de dados.\n    if not verificar_duplicacao_professor(cursor, tabela, nome_coluna, valor):\n        # Inserção de dados\n        insert_data_query = f\"\"\"\n        INSERT INTO {tabela} ({nome_coluna})\n        VALUES (%s)\n        \"\"\"\n        data = (valor,)\n        cursor.execute(insert_data_query, data)",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_duplicacao_disciplina",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def verificar_duplicacao_disciplina(cursor, nome_disciplina):\n    # Verificar se a linha já existe\n    check_duplicate_query = \"\"\"\n    SELECT * FROM disciplina\n    WHERE nome_disciplina = %s\n    \"\"\"\n    params = (nome_disciplina, )\n    cursor.execute(check_duplicate_query, params)\n    result = cursor.fetchall()\n    return len(result) > 0",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "inserir_dados_disciplina",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def inserir_dados_disciplina(conn, cursor, codigo_disciplina, nome_disciplina, carga_horaria, creditos):\n    # if para adicionar apenas a disciplina que não estão cadastrados ainda no banco de dados.\n    if not verificar_duplicacao_disciplina(cursor, nome_disciplina):\n        # Inserção de dados\n        insert_data_query = \"\"\"\n        INSERT INTO disciplina (codigo_disciplina, nome_disciplina, carga_horaria, creditos)\n        VALUES (%s, %s, %s, %s)\n        \"\"\"\n        disciplina_data = (codigo_disciplina, nome_disciplina, carga_horaria, creditos)\n        cursor.execute(insert_data_query, disciplina_data)",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "verificar_duplicacao_historico",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def verificar_duplicacao_historico(cursor, semestre, id_aluno, id_disciplina):\n    # Verificar se a linha já existe\n    check_duplicate_query = \"\"\"\n    SELECT * FROM historico\n    WHERE semestre = %s AND id_aluno = %s AND id_disciplina = %s\n    \"\"\"\n    params = (semestre, id_aluno, id_disciplina)\n    cursor.execute(check_duplicate_query, params)\n    result = cursor.fetchall()\n    return len(result) > 0",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "inserir_dados_historico",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def inserir_dados_historico(conn, cursor, semestre, id_aluno, id_disciplina, id_professor, nota_final, situacao):\n    # if para adicionar apenas o historico que não estão cadastrados ainda no banco de dados.\n    if not verificar_duplicacao_historico(cursor, semestre, id_aluno, id_disciplina):\n        # Inserção de dados\n        insert_data_query = \"\"\"\n        INSERT INTO historico (semestre, id_aluno, id_disciplina, id_professor, nota_final, situacao)\n        VALUES (%s, %s, %s, %s, %s, %s)\n        \"\"\"\n        historico_data = (semestre, id_aluno, id_disciplina, id_professor, nota_final, situacao)\n        cursor.execute(insert_data_query, historico_data)",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_dados",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_dados(cursor, tabela):\n    # Exemplo de consulta de dados\n    select_data_query = f\"SELECT * FROM {tabela}\"\n    cursor.execute(select_data_query)\n    result = cursor.fetchall()\n    print(f\"\\nRegistros na tabela '{tabela}':\")\n    for row in result:\n        print(row)\ndef consultar_dado_especifico_da_tabela(cursor, tabela, coluna, id_especifico):\n    # Exemplo de consulta de dados por ID",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "consultar_dado_especifico_da_tabela",
+        "kind": 2,
+        "importPath": "bd_funcao",
+        "description": "bd_funcao",
+        "peekOfCode": "def consultar_dado_especifico_da_tabela(cursor, tabela, coluna, id_especifico):\n    # Exemplo de consulta de dados por ID\n    select_data_query = f\"SELECT * FROM {tabela} WHERE {coluna} = {id_especifico}\"\n    cursor.execute(select_data_query)\n    result = cursor.fetchall()\n    print(f\"\\nRegistro do ID {id} na tabela '{tabela}':\")\n    for row in result:\n        print(row)\n\"\"\"\n# Uso das funções",
+        "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "caminho_atual",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "caminho_atual = os.path.dirname(os.path.realpath(__file__))\n# Junta o caminho atual com o caminho relativo da pasta\npasta = os.path.join(caminho_atual, \"arquivo tipo 1\")\n# Lista todos os arquivos na pasta\narquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "pasta",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "pasta = os.path.join(caminho_atual, \"arquivo tipo 1\")\n# Lista todos os arquivos na pasta\narquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "arquivos_na_pasta",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "arquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "fila_arquivos",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "fila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "total",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "total = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()\n    print(\"=> \", nome_arquivo, \"-\", Cont, \"/\", total, \" <=\\n\")\n    # Junta o caminho atual com o caminho relativo da pasta e do arquivo\n    caminho_completo = os.path.join(pasta, nome_arquivo)\n    # Carrega a planilha usando o caminho completo",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "Cont",
+        "kind": 5,
+        "importPath": "tipo1",
+        "description": "tipo1",
+        "peekOfCode": "Cont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()\n    print(\"=> \", nome_arquivo, \"-\", Cont, \"/\", total, \" <=\\n\")\n    # Junta o caminho atual com o caminho relativo da pasta e do arquivo\n    caminho_completo = os.path.join(pasta, nome_arquivo)\n    # Carrega a planilha usando o caminho completo\n    planilha = load_workbook(caminho_completo)",
+        "detail": "tipo1",
+        "documentation": {}
+    },
+    {
+        "label": "caminho_atual",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "caminho_atual = os.path.dirname(os.path.realpath(__file__))\n# Junta o caminho atual com o caminho relativo da pasta\npasta = os.path.join(caminho_atual, \"arquivo tipo 2\")\n# Lista todos os arquivos na pasta\narquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista",
+        "detail": "tipo2",
+        "documentation": {}
+    },
+    {
+        "label": "pasta",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "pasta = os.path.join(caminho_atual, \"arquivo tipo 2\")\n# Lista todos os arquivos na pasta\narquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1",
+        "detail": "tipo2",
+        "documentation": {}
+    },
+    {
+        "label": "arquivos_na_pasta",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "arquivos_na_pasta = os.listdir(pasta)\n# Criar uma fila e adicionar os arquivos a ela\nfila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():",
+        "detail": "tipo2",
+        "documentation": {}
+    },
+    {
+        "label": "fila_arquivos",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "fila_arquivos = queue.Queue()\nfor arquivo in arquivos_na_pasta:\n    fila_arquivos.put(arquivo)\n# Tamanho da lista\ntotal = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()",
+        "detail": "tipo2",
+        "documentation": {}
+    },
+    {
+        "label": "total",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "total = len(arquivos_na_pasta)\nCont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()\n    print(\"=> \", nome_arquivo, \"-\", Cont, \"/\", total, \" <=\\n\")\n    # Junta o caminho atual com o caminho relativo da pasta e do arquivo\n    caminho_completo = os.path.join(pasta, nome_arquivo)\n    # Carrega a planilha usando o caminho completo",
+        "detail": "tipo2",
+        "documentation": {}
+    },
+    {
+        "label": "Cont",
+        "kind": 5,
+        "importPath": "tipo2",
+        "description": "tipo2",
+        "peekOfCode": "Cont = 1\n# Corre os arquivos da fila\nwhile not fila_arquivos.empty():\n    # Imprimir nome do arquivo e porcentagem de leitura\n    nome_arquivo = fila_arquivos.get()\n    print(\"=> \", nome_arquivo, \"-\", Cont, \"/\", total, \" <=\\n\")\n    # Junta o caminho atual com o caminho relativo da pasta e do arquivo\n    caminho_completo = os.path.join(pasta, nome_arquivo)\n    # Carrega a planilha usando o caminho completo\n    planilha = load_workbook(caminho_completo)",
+        "detail": "tipo2",
+        "documentation": {}
+    }
+]
