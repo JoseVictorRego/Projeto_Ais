@@ -26,5 +26,10 @@ FROM aluno a
 JOIN historico h ON a.id_aluno = h.id_aluno
 WHERE h.id_disciplina = 402;
 # 10 Listar alunos que serão jubilados
+SELECT a.nome_aluno, COUNT(DISTINCT h.semestre) as qtd_semestres
+FROM aluno a
+JOIN historico h ON a.id_aluno = h.id_aluno
+GROUP BY a.id_aluno, a.nome_aluno
+HAVING qtd_semestres > 12;
 # 11 nº de disciplinas x professor x ano/sem quais
 SELECT nome_professor, semestre, COUNT(DISTINCT id_disciplina) as qtd_disciplinas FROM historico JOIN professor ON historico.id_professor = professor.id_professor GROUP BY nome_professor, semestre;
