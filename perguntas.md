@@ -3,7 +3,13 @@ SELECT situacao, COUNT(*) as qtd_alunos
 FROM historico
 GROUP BY situacao;
 # 2 Disciplinas que mais reprovam por nota/falta/situação
-SELECT id_disciplina, COUNT(*) as qtd_reprovacoes FROM historico WHERE situacao = 'Reprovado' GROUP BY id_disciplina;
+SELECT d.nome_disciplina, COUNT(*) as qtd_reprovacoes
+FROM historico h
+JOIN disciplina d ON h.id_disciplina = d.id_disciplina
+WHERE h.situacao = 'Reprovado'
+GROUP BY h.id_disciplina
+ORDER BY qtd_reprovacoes DESC
+LIMIT 10;
 # 3 Dado um aluno: Qts/Quais disciplinas ele falta cursar
 # 4 Dada uma disciplinas, qtos alunos estão aptos a cursá-lá (aluno nunca cursou/reprovado)
 # 5 Listar alunos regularmente matriculados no curso/disciplina
