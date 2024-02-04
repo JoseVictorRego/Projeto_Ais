@@ -24,6 +24,16 @@ JOIN historico h ON disciplina_count.id_disciplina = h.id_disciplina AND discipl
 JOIN disciplina d ON h.id_disciplina = d.id_disciplina
 GROUP BY d.nome_disciplina, h.semestre;
 # 7 Alunos formados no tempo certo
+SELECT a.nome_aluno, COUNT(DISTINCT h.semestre) as qtd_total_semestres
+FROM aluno a
+JOIN historico h ON a.id_aluno = h.id_aluno
+WHERE a.id_aluno IN (
+    SELECT id_aluno
+    FROM historico
+    WHERE id_disciplina = 404
+)
+GROUP BY a.id_aluno, a.nome_aluno
+HAVING COUNT(DISTINCT h.semestre) = 8;
 # 8 Listar alunos com desistência / alunos reprovados por falta
 SELECT nome_aluno, situacao FROM aluno JOIN historico ON aluno.id_aluno = historico.id_aluno WHERE situacao = 'Desistência' OR situacao = 'Reprovado por Falta';
 # 9 Listar alunos trancados
