@@ -13,7 +13,11 @@ ORDER BY qtd_reprovacoes DESC
 LIMIT 10;
 
 # 3 Dado um aluno: Qts/Quais disciplinas ele falta cursar
+SELECT a.id_aluno, a.nome_aluno, COUNT(DISTINCT d.id_disciplina) as qtd_disciplinas_faltantes FROM aluno a CROSS JOIN disciplina d WHERE d.id_disciplina NOT IN ( SELECT DISTINCT h.id_disciplina FROM historico h WHERE h.id_aluno = a.id_aluno AND h.id_disciplina NOT IN (402, 404, 407, 408, 409) ) GROUP BY a.id_aluno, a.nome_aluno;
+
 # 4 Dada uma disciplinas, qtos alunos estão aptos a cursá-lá (aluno nunca cursou/reprovado)
+SELECT d.nome_disciplina, h.id_disciplina, COUNT(DISTINCT a.id_aluno) as qtd_alunos FROM aluno a LEFT JOIN historico h ON a.id_aluno = h.id_aluno LEFT JOIN disciplina d ON h.id_disciplina = d.id_disciplina WHERE h.id_disciplina NOT IN (402, 404, 407, 408, 409) OR h.id_disciplina IS NULL GROUP BY d.nome_disciplina, h.id_disciplina;
+
 # 5 Listar alunos regularmente matriculados no curso/disciplina
 SELECT a.nome_aluno, d.nome_disciplina
 FROM historico h
