@@ -9,6 +9,24 @@
         "documentation": {}
     },
     {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -200,6 +218,60 @@
         "description": "bd_funcao",
         "peekOfCode": "def consultar_dado_especifico_da_tabela(cursor, tabela, coluna, id_especifico):\n    # Exemplo de consulta de dados por ID\n    select_data_query = f\"SELECT * FROM {tabela} WHERE {coluna} = {id_especifico}\"\n    cursor.execute(select_data_query)\n    result = cursor.fetchall()\n    print(f\"\\nRegistro do ID {id} na tabela '{tabela}':\")\n    for row in result:\n        print(row)\n\"\"\"\n# Uso das funções",
         "detail": "bd_funcao",
+        "documentation": {}
+    },
+    {
+        "label": "grafico_barra",
+        "kind": 2,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "def grafico_barra(text_1):\n    # texto do select\n    sql_query = text_1\n    # Ler dados usando Pandas\n    df = pd.read_sql(sql_query, conn)\n    # Criar gráfico de barras agrupadas com paleta de cores automática\n    fig, ax = plt.subplots()\n    width = 0.2  # Largura das barras\n    colors = plt.cm.get_cmap('tab10', len(df['situacao']))  # Escolhe uma paleta de cores\n    df['qtd_alunos'].plot(kind='bar', color=colors(df['situacao'].index), width=width, position=1, ax=ax,",
+        "detail": "graficos",
+        "documentation": {}
+    },
+    {
+        "label": "grafico_pizza",
+        "kind": 2,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "def grafico_pizza(text_2):\n    # texto do select\n    sql_query = text_2\n    # Ler dados usando Pandas\n    df = pd.read_sql(sql_query, conn)\n    # Criar gráfico de pizza\n    plt.figure(figsize=(8, 8))\n    plt.pie(df['qtd_reprovacoes'], labels=df['nome_disciplina'], autopct='%1.1f%%', startangle=90,\n            colors=plt.cm.Paired.colors)\n    plt.title('Tops Disciplinas com Maior Quantidade de Reprovações')",
+        "detail": "graficos",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "kind": 5,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "config = {\n    'host': '127.0.0.1',\n    'user': 'root',\n    'password': '',\n    'database': 'banco_ais_faculdade'\n}\n# Grafico para questão 1\ndef grafico_barra(text_1):\n    # texto do select\n    sql_query = text_1",
+        "detail": "graficos",
+        "documentation": {}
+    },
+    {
+        "label": "conn",
+        "kind": 5,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "conn = mysql.connector.connect(**config)\n# Consulta SQL para a questão 1\npesquisa_1 = (\"SELECT situacao, COUNT(DISTINCT id_aluno) as qtd_alunos FROM historico \"\n              \"WHERE situacao IS NOT NULL AND situacao != 'NÃO INFORMADO' GROUP BY situacao;\")\n# Importar grafico\ngrafico_barra(pesquisa_1)\n# Consulta SQL para a questão 2\npesquisa_2 = (\"SELECT d.nome_disciplina, COUNT(*) as qtd_reprovacoes FROM historico h JOIN disciplina d \"\n              \"ON h.id_disciplina = d.id_disciplina WHERE h.situacao = 'Reprovado' \"\n              \"OR h.situacao = 'Reprovado por falta' GROUP BY h.id_disciplina ORDER BY qtd_reprovacoes DESC LIMIT 5;\")",
+        "detail": "graficos",
+        "documentation": {}
+    },
+    {
+        "label": "pesquisa_1",
+        "kind": 5,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "pesquisa_1 = (\"SELECT situacao, COUNT(DISTINCT id_aluno) as qtd_alunos FROM historico \"\n              \"WHERE situacao IS NOT NULL AND situacao != 'NÃO INFORMADO' GROUP BY situacao;\")\n# Importar grafico\ngrafico_barra(pesquisa_1)\n# Consulta SQL para a questão 2\npesquisa_2 = (\"SELECT d.nome_disciplina, COUNT(*) as qtd_reprovacoes FROM historico h JOIN disciplina d \"\n              \"ON h.id_disciplina = d.id_disciplina WHERE h.situacao = 'Reprovado' \"\n              \"OR h.situacao = 'Reprovado por falta' GROUP BY h.id_disciplina ORDER BY qtd_reprovacoes DESC LIMIT 5;\")\n# Importar grafico\ngrafico_pizza(pesquisa_2)",
+        "detail": "graficos",
+        "documentation": {}
+    },
+    {
+        "label": "pesquisa_2",
+        "kind": 5,
+        "importPath": "graficos",
+        "description": "graficos",
+        "peekOfCode": "pesquisa_2 = (\"SELECT d.nome_disciplina, COUNT(*) as qtd_reprovacoes FROM historico h JOIN disciplina d \"\n              \"ON h.id_disciplina = d.id_disciplina WHERE h.situacao = 'Reprovado' \"\n              \"OR h.situacao = 'Reprovado por falta' GROUP BY h.id_disciplina ORDER BY qtd_reprovacoes DESC LIMIT 5;\")\n# Importar grafico\ngrafico_pizza(pesquisa_2)\n# Fechar a conexão\nconn.close()",
+        "detail": "graficos",
         "documentation": {}
     },
     {
