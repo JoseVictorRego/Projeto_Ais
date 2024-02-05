@@ -78,11 +78,7 @@ WHERE a.id_aluno IN (
 GROUP BY a.id_aluno, a.nome_aluno
 HAVING COUNT(DISTINCT h.semestre) = 8;
 
-# 7.1 Qtd de alunos formados no tempo certo
-
-# 8 Listar alunos com desistência - Não existe aluno com desistencia, mais sim aluno desligamento, desvinculados.
-
-# 8.1 Listar alunos reprovados por falta
+# 8 Listar alunos reprovados por falta
 SELECT a.nome_aluno, COUNT(*) AS qtd_reprovados_por_falta
 FROM historico h
 JOIN aluno a ON h.id_aluno = a.id_aluno
