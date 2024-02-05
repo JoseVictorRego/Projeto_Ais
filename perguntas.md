@@ -7,7 +7,7 @@ GROUP BY situacao;
 SELECT d.nome_disciplina, COUNT(*) as qtd_reprovacoes
 FROM historico h
 JOIN disciplina d ON h.id_disciplina = d.id_disciplina
-WHERE h.situacao = 'Reprovado'
+WHERE h.situacao = 'Reprovado' OR h.situacao = 'Reprovado por falta'
 GROUP BY h.id_disciplina
 ORDER BY qtd_reprovacoes DESC
 LIMIT 10;
