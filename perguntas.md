@@ -1,5 +1,5 @@
 # 1 Qts alunos/status (quem)
-SELECT situacao, COUNT(*) as qtd_alunos
+SELECT situacao, COUNT(DISTINCT id_aluno) as qtd_alunos
 FROM historico
 GROUP BY situacao;
 
