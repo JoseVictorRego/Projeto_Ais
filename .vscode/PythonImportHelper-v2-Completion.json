@@ -231,7 +231,7 @@
         "kind": 2,
         "importPath": "db_setup",
         "description": "db_setup",
-        "peekOfCode": "def setup_database():\n  db_connection = mysql.connector.connector.connect(\n        host= os.getenv(\"DB_HOST\"),\n        user= os.getenv(\"DB_USER\"),\n        password= os.getenv(\"DB_PASSWORD\")\n    )\n  cursor = db_connection.cursor()\n  cursor.execute(\"CREATE DATABASE IF NOT EXISTS banco_ais_faculdade\")\n  cursor.execute(\"USE banco_ais_faculdade\")\n  cursor.execute(\"\"\"",
+        "peekOfCode": "def setup_database():\n  config = {\n            'host': os.getenv('HOST'),\n            'user': os.getenv('USER'),\n            'password': os.getenv('PASSWORD'),\n        }\n  conn = mysql.connector.connect(**config)\n  cursor = conn.cursor()\n  cursor.execute(\"CREATE DATABASE IF NOT EXISTS banco_ais_faculdade\")\n  cursor.execute(\"USE banco_ais_faculdade\")",
         "detail": "db_setup",
         "documentation": {}
     },

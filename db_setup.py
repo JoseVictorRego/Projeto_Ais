@@ -7,13 +7,14 @@ load_dotenv()
 
 def setup_database():
   
-  db_connection = mysql.connector.connector.connect(
-        host= os.getenv("DB_HOST"),
-        user= os.getenv("DB_USER"),
-        password= os.getenv("DB_PASSWORD")
-    )
+  config = {
+            'host': os.getenv('HOST'),
+            'user': os.getenv('USER'),
+            'password': os.getenv('PASSWORD'),
+        }
   
-  cursor = db_connection.cursor()
+  conn = mysql.connector.connect(**config)
+  cursor = conn.cursor()
 
   cursor.execute("CREATE DATABASE IF NOT EXISTS banco_ais_faculdade")
 
@@ -65,12 +66,12 @@ def setup_database():
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
   """)
 
-  cursor.execute("""
-    ALTER TABLE historico
-    ADD CONSTRAINT historico_ibfk_1 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno),
-    ADD CONSTRAINT historico_ibfk_2 FOREIGN KEY (id_professor) REFERENCES professor (id_professor),
-    ADD CONSTRAINT historico_ibfk_3 FOREIGN KEY (id_disciplina) REFERENCES disciplina (id_disciplina)
-  """)
+  # cursor.execute("""
+  #   ALTER TABLE historico
+  #   ADD CONSTRAINT historico_ibfk_1 FOREIGN KEY (id_aluno) REFERENCES aluno (id_aluno),
+  #   ADD CONSTRAINT historico_ibfk_2 FOREIGN KEY (id_professor) REFERENCES professor (id_professor),
+  #   ADD CONSTRAINT historico_ibfk_3 FOREIGN KEY (id_disciplina) REFERENCES disciplina (id_disciplina)
+  # """)
 
   cursor.close()
-  db_connection.close()
+  conn.close()
