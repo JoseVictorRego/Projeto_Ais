@@ -2,6 +2,9 @@ import os
 import queue
 from openpyxl import load_workbook
 from bd_funcao import *
+from db_setup import setup_database
+
+setup_database()
 
 # Obtém o caminho atual do diretório do script_ em execução
 caminho_atual = os.path.dirname(os.path.realpath(__file__))
