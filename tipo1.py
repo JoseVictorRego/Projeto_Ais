@@ -2,6 +2,9 @@ import os
 import queue
 from openpyxl import load_workbook
 from bd_funcao import *
+from db_setup import setup_database
+
+setup_database()
 
 # Obtém o caminho atual do diretório do script_ em execução
 caminho_atual = os.path.dirname(os.path.realpath(__file__))
@@ -44,86 +47,86 @@ while not fila_arquivos.empty():
     conn, cursor = conectar()
     if conn and cursor:
         try:
-            with cursor:
+            
 
-                # inciar coneção com o banco de dados
-                for celula in aba_ativa["D"]:
+            # inciar coneção com o banco de dados
+            for celula in aba_ativa["D"]:
 
-                    # Encontrar celula com essa denominação
-                    if celula.value == "NOME DO (A) ALUNO (A)":
+                # Encontrar celula com essa denominação
+                if celula.value == "NOME DO (A) ALUNO (A)":
 
-                        # Pular uma linha para poder caputurar os dados dos alunos
-                        proxima_linha = celula.row + 1
+                    # Pular uma linha para poder caputurar os dados dos alunos
+                    proxima_linha = celula.row + 1
 
-                        # Caputurar os dados do aluno e salvar nas variaveis em amostra
-                        NomeAluno = aba_ativa.cell(row=proxima_linha, column=4)  # Coluna "D"
-                        SexoAluno = aba_ativa.cell(row=proxima_linha, column=14)  # Coluna "N"
-                        FormIngres = aba_ativa.cell(row=proxima_linha, column=15)  # Coluna "O"
-                        PeriodoIngres = aba_ativa.cell(row=proxima_linha, column=27)  # Coluna "AA"
+                    # Caputurar os dados do aluno e salvar nas variaveis em amostra
+                    NomeAluno = aba_ativa.cell(row=proxima_linha, column=4)  # Coluna "D"
+                    SexoAluno = aba_ativa.cell(row=proxima_linha, column=14)  # Coluna "N"
+                    FormIngres = aba_ativa.cell(row=proxima_linha, column=15)  # Coluna "O"
+                    PeriodoIngres = aba_ativa.cell(row=proxima_linha, column=27)  # Coluna "AA"
 
-                        # teste
-                        print(f"---------------Aluno: {NomeAluno.value}---------------")
+                    # teste
+                    print(f"---------------Aluno: {NomeAluno.value}---------------")
 
-                        # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
-                        id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
-                                                      FormIngres.value, PeriodoIngres.value)
+                    # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
+                    id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
+                                                  FormIngres.value, PeriodoIngres.value)
 
-                        # Linha do inicío do recolhimento dos dados academicos
-                        linhaD_campus = proxima_linha + 7
+                    # Linha do inicío do recolhimento dos dados academicos
+                    linhaD_campus = proxima_linha + 7
 
-                        # Iniciar leitura dos dados do historico das disciplinas cursadas
-                        for celulaD in aba_ativa["A"][linhaD_campus:]:
+                    # Iniciar leitura dos dados do historico das disciplinas cursadas
+                    for celulaD in aba_ativa["A"][linhaD_campus:]:
 
-                            # if caso a celula seja nula
-                            if celulaD.value is None:
-                                continue
+                        # if caso a celula seja nula
+                        if celulaD.value is None:
+                            continue
 
-                            # Condição para encontrar celula inicial para pular de folha
-                            elif (celulaD.value == "CH TOTAL DO PERFIL EM HORAS" or celulaD.value == Titulo.value
-                                  or celulaD.value == 3210):
-                                break
+                        # Condição para encontrar celula inicial para pular de folha
+                        elif (celulaD.value == "CH TOTAL DO PERFIL EM HORAS" or celulaD.value == Titulo.value
+                              or celulaD.value == 3210):
+                            break
 
-                            # Condição principal para recolher dados da disciplina
-                            elif celulaD.value >= PeriodoIngres.value or celulaD.value <= PeriodoIngres.value:
+                        # Condição principal para recolher dados da disciplina
+                        elif celulaD.value >= PeriodoIngres.value or celulaD.value <= PeriodoIngres.value:
 
-                                Ano = aba_ativa.cell(row=celulaD.row, column=1)  # Coluna "A"
-                                Semetre = aba_ativa.cell(row=celulaD.row, column=2)  # Coluna "B"
-                                Codigo = aba_ativa.cell(row=celulaD.row, column=3)  # Coluna "C"
-                                Disciplina = aba_ativa.cell(row=celulaD.row, column=5)  # Coluna "E"
-                                CargaHoraria = aba_ativa.cell(row=celulaD.row, column=16)  # Coluna "P"
-                                Creditos = aba_ativa.cell(row=celulaD.row, column=19)  # Coluna "S"
-                                NotaFinal = aba_ativa.cell(row=celulaD.row, column=22)  # Coluna "V"
-                                Situacao = aba_ativa.cell(row=celulaD.row, column=25)  # Coluna "y"
+                            Ano = aba_ativa.cell(row=celulaD.row, column=1)  # Coluna "A"
+                            Semetre = aba_ativa.cell(row=celulaD.row, column=2)  # Coluna "B"
+                            Codigo = aba_ativa.cell(row=celulaD.row, column=3)  # Coluna "C"
+                            Disciplina = aba_ativa.cell(row=celulaD.row, column=5)  # Coluna "E"
+                            CargaHoraria = aba_ativa.cell(row=celulaD.row, column=16)  # Coluna "P"
+                            Creditos = aba_ativa.cell(row=celulaD.row, column=19)  # Coluna "S"
+                            NotaFinal = aba_ativa.cell(row=celulaD.row, column=22)  # Coluna "V"
+                            Situacao = aba_ativa.cell(row=celulaD.row, column=25)  # Coluna "y"
 
-                                # criar periodoLetivo
-                                periodoLetivo = Ano.value + Semetre.value * 0.1
+                            # criar periodoLetivo
+                            periodoLetivo = Ano.value + Semetre.value * 0.1
 
-                                # Separar Disciplinas em nome_disciplina e nome_professor
-                                if '\n' in Disciplina.value:
+                            # Separar Disciplinas em nome_disciplina e nome_professor
+                            if '\n' in Disciplina.value:
 
-                                    # Distribuir os dados para as variaveis
-                                    nome_disciplina = Disciplina.value.split('\n')[0]
-                                    nome_professor = Disciplina.value.split('\nDOCENTE(S): ')[1]
+                                # Distribuir os dados para as variaveis
+                                nome_disciplina = Disciplina.value.split('\n')[0]
+                                nome_professor = Disciplina.value.split('\nDOCENTE(S): ')[1]
 
-                                    # Identificar id_professor ou adicionar no banco de dados
-                                    id_professor = consultar_id_professor(conn, cursor, nome_professor)
+                                # Identificar id_professor ou adicionar no banco de dados
+                                id_professor = consultar_id_professor(conn, cursor, nome_professor)
 
-                                else:
-                                    # Distribuir os dados para as variaveis
-                                    nome_disciplina = Disciplina.value
-                                    id_professor = None
+                            else:
+                                # Distribuir os dados para as variaveis
+                                nome_disciplina = Disciplina.value
+                                id_professor = None
 
-                                    # Indentificar id_disciplina ou adicionar no banco de dados
-                                id_disciplina = consultar_id_disciplina(conn, cursor, Codigo.value, nome_disciplina,
-                                                                        CargaHoraria.value, Creditos.value)
+                                # Indentificar id_disciplina ou adicionar no banco de dados
+                            id_disciplina = consultar_id_disciplina(conn, cursor, Codigo.value, nome_disciplina,
+                                                                    CargaHoraria.value, Creditos.value)
 
-                                # Adiscipnar dados do historico na base de dados ou informar se ele ja existir nela
-                                inserir_dados_historico(conn, cursor, periodoLetivo, id_aluno, id_disciplina,
-                                                        id_professor, NotaFinal.value, Situacao.value)
+                            # Adiscipnar dados do historico na base de dados ou informar se ele ja existir nela
+                            inserir_dados_historico(conn, cursor, periodoLetivo, id_aluno, id_disciplina,
+                                                    id_professor, NotaFinal.value, Situacao.value)
 
-                                # Teste
-                                print(f"Historico: {periodoLetivo}, {id_aluno}, {id_disciplina}, {id_professor}, "
-                                      f"{NotaFinal.value}, {Situacao.value}")
+                            # Teste
+                            print(f"Historico: {periodoLetivo}, {id_aluno}, {id_disciplina}, {id_professor}, "
+                                  f"{NotaFinal.value}, {Situacao.value}")
 
                 # Contador de arquivos lidos
                 Cont = Cont + 1

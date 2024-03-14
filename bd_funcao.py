@@ -1,16 +1,19 @@
 import mysql.connector
-
+import os
+from dotenv import load_dotenv
 # ---------------------------------Funções conectar e desconectar do banco de dados---------------------------
+
+load_dotenv() 
 
 # Função conectar no banco
 def conectar():
     """Conectar ao banco de dados."""
     try:
         config = {
-            'host': '127.0.0.1',
-            'user': 'root',
-            'password': '',
-            'database': 'banco_ais_faculdade'
+            'host': os.getenv('HOST'),
+            'user': os.getenv('USER'),
+            'password': os.getenv('PASSWORD'),
+            'database': os.getenv('DATABASE')
         }
 
         # Conectar ao MySQL

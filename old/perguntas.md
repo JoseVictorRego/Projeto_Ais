@@ -1,4 +1,4 @@
-# 1 Qts alunos/status (quem) FEITO
+<!-- # 1 Qts alunos/status (quem) FEITO
 SELECT situacao, COUNT(DISTINCT id_aluno) as qtd_alunos
 FROM historico
 GROUP BY situacao;
@@ -102,4 +102,4 @@ GROUP BY a.id_aluno, a.nome_aluno
 HAVING qtd_semestres > 12;
 
 # 11 nº de disciplinas x professor x ano/sem quais
-SELECT nome_professor, semestre, COUNT(DISTINCT id_disciplina) as qtd_disciplinas FROM historico JOIN professor ON historico.id_professor = professor.id_professor GROUP BY nome_professor, semestre;
+SELECT nome_professor, semestre, COUNT(DISTINCT id_disciplina) as qtd_disciplinas FROM historico JOIN professor ON historico.id_professor = professor.id_professor GROUP BY nome_professor, semestre; -->
