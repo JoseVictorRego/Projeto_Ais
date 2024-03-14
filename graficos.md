@@ -19,7 +19,7 @@ Gráfico de barras ou de linha para representar a média de alunos por disciplin
 # 7 Alunos formados no tempo certo FEITO
 Gráfico de barras empilhadas ou de linha para mostrar a taxa de alunos que se formaram no tempo certo em comparação com os que não o fizeram.
 
-# 8 Listar alunos com desistência / alunos reprovados por falta  FEITO
+# 8 Listar alunos com desistência / alunos reprovados por falta FEITO
 Tabela ou gráfico de barras para listar e mostrar a distribuição de alunos com desistência ou reprovação por falta.
 
 # 9 Listar alunos trancados FEITO / fazer POR DISCIPLINA, POR PERIODO
