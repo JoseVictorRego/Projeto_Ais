@@ -61,9 +61,10 @@ while not fila_arquivos.empty():
                     FormIngres = aba_ativa.cell(row=proxima_linha, column=18)  # Coluna "R"
                     PeriodoIngres = aba_ativa.cell(row=proxima_linha, column=28)  # Coluna "AB"
 
-                    # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
-                    id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
-                                                  FormIngres.value, PeriodoIngres.value)
+                    if NomeAluno != "DOCENTE(S): -----------.":
+                        # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
+                        id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
+                                                      FormIngres.value, PeriodoIngres.value)
 
                     # Linha do inicío do recolhimento dos dados academicos
                     linhaD_campus = proxima_linha + 5
@@ -83,7 +84,7 @@ while not fila_arquivos.empty():
                             continue
 
                         # Condição para encontrar celula inicial para pular de folha
-                        elif celulaD.value == Titulo.value:
+                        elif celulaD.value == Titulo.value or NomeAluno.value == "DOCENTE(S): -----------.":
                             break
 
                         # Condição principal para recolher dados da disciplina
@@ -97,6 +98,11 @@ while not fila_arquivos.empty():
                             Creditos = aba_ativa.cell(row=celulaD.row, column=21)  # Coluna "U"
                             NotaFinal = aba_ativa.cell(row=celulaD.row, column=24)  # Coluna "X"
                             Situacao = aba_ativa.cell(row=celulaD.row, column=26)  # Coluna "Z"
+
+                            if NomeAluno != "DOCENTE(S): -----------.":
+                                # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
+                                id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
+                                                              FormIngres.value, PeriodoIngres.value)
 
                             # criar periodoLetivo
                             periodoLetivo = Ano.value + Semetre.value * 0.1
@@ -124,10 +130,9 @@ while not fila_arquivos.empty():
                             inserir_dados_historico(conn, cursor, periodoLetivo, id_aluno, id_disciplina,
                                                     id_professor, NotaFinal.value, Situacao.value)
 
-                # Contador de arquivos lidos
-                Cont = Cont + 1
-                print("=============================================================================================")
-
         # Finalizar conecção com o banco de dados
         finally:
             desconectar(conn, cursor)
+    # Contador de arquivos lidos
+    Cont = Cont + 1
+    print("=============================================================================================")

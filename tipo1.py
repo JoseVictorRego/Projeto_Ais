@@ -67,9 +67,10 @@ while not fila_arquivos.empty():
                     # teste
                     print(f"---------------Aluno: {NomeAluno.value}---------------")
 
-                    # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
-                    id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
-                                                  FormIngres.value, PeriodoIngres.value)
+                    if NomeAluno != "DOCENTE(S): -----------.":
+                        # Adicionar aluno e recolher seu id_aluno, ou so recolher id aluno
+                        id_aluno = consultar_id_aluno(conn, cursor, NomeAluno.value, SexoAluno.value,
+                                                      FormIngres.value, PeriodoIngres.value)
 
                     # Linha do inicío do recolhimento dos dados academicos
                     linhaD_campus = proxima_linha + 7
@@ -83,7 +84,7 @@ while not fila_arquivos.empty():
 
                         # Condição para encontrar celula inicial para pular de folha
                         elif (celulaD.value == "CH TOTAL DO PERFIL EM HORAS" or celulaD.value == Titulo.value
-                              or celulaD.value == 3210):
+                              or celulaD.value == 3210 or NomeAluno.value == "DOCENTE(S): -----------."):
                             break
 
                         # Condição principal para recolher dados da disciplina
@@ -125,13 +126,12 @@ while not fila_arquivos.empty():
                                                     id_professor, NotaFinal.value, Situacao.value)
 
                             # Teste
-                            print(f"Historico: {periodoLetivo}, {id_aluno}, {id_disciplina}, {id_professor}, "
-                                  f"{NotaFinal.value}, {Situacao.value}")
-
-                # Contador de arquivos lidos
-                Cont = Cont + 1
-                print("===========================================================================================")
+                            """ print(f"Historico: {periodoLetivo}, {id_aluno}, {id_disciplina}, {id_professor}, "
+                                 # f"{NotaFinal.value}, {Situacao.value}")"""
 
         # Finalizar conecção com o banco de dados
         finally:
             desconectar(conn, cursor)
+    # Contador de arquivos lidos
+    Cont = Cont + 1
+    print("=============================================================================================")
